@@ -51,7 +51,7 @@ class Parser {
         $properties = [];
         $subcomponents = [];
         while($line = trim($this->reader->read())) {
-            if($line == 'END:V'.$component) {
+            if($line == 'END:'.$component) {
                 return $event;
             }
             $property = $this->parseProperty($line);
