@@ -1,0 +1,13 @@
+{
+    "name": "jakumi/parser-icalendar-structure",
+    "description": "parse the structure like icalendar (rfc 2445, 5545, 7986)",
+    "type": "library",
+    "license": "MIT",
+    "minimum-stability": "dev",
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "jakumi\\Parser\\iCalendarStructure\\": ""
+        }
+    }
+}
