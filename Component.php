@@ -18,10 +18,10 @@ class Component {
 
     static $atmostonce = [];
     
-    function __construct(string $type, array $properties, array $subcomponents) {
+    function __construct(string $type, array $properties, array $components) {
         $this->type = $type;
         $this->properties = $properties;
-        $this->subcomponents = $subcomponents;
+        $this->components = $components;
     }
 
     function __get($key) {
@@ -38,7 +38,7 @@ class Component {
     function get(string $propertyName) :array {
         $ret = [];
         foreach($this->properties as $property) {
-            if($property->name == $propertyName) {
+            if(strtoupper($property->name) == strtoupper($propertyName)) {
                 $ret[] = $property;
             }
         }
@@ -50,9 +50,10 @@ class Component {
      */
     function getFirst(string $propertyName) :?Property {
         foreach($this->properties as $property) {
-            if($property->name == $propertyName) {
+            if(strtoupper($property->name) == strtoupper($propertyName)) {
                 return $property;
             }
         }
+        return null;
     }
 }

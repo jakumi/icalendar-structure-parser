@@ -41,18 +41,18 @@ class Parser {
      */
     function parseComponent($returnOnSubComponent=false) :?Component {
         $line = trim($this->reader->read());
-        if(preg_match('#^BEGIN:([a-z0-9-]+)$#si', $line, $matches)) {
-            $component = $matches[1];
+        if(!preg_match('#^BEGIN:([a-z0-9-]+)$#si', $line, $matches)) {
             $this->reader->pushback($line);
             return null;
         }
+        $component = $matches[1];
         $class = static::$classMap[strtoupper($component)] ?? Component::class;
 
         $properties = [];
         $subcomponents = [];
         while($line = trim($this->reader->read())) {
             if($line == 'END:'.$component) {
-                return $event;
+                break;
             }
             $property = $this->parseProperty($line);
             if(strpos($property->name, 'BEGIN') === 0) {
@@ -60,9 +60,9 @@ class Parser {
                 if($returnOnSubComponent) {
                     $component = new $class($component, $properties, $subcomponents);
                     array_unshift($this->stack, $component);
-                    return $obj;
+                    return $component;
                 }
-                $subcomponents[] = $this->readComponent();
+                $subcomponents[] = $this->parseComponent();
             }
             if(!is_null($property)) {
                 $properties[] = $property;
@@ -80,7 +80,7 @@ class Parser {
      */
     function backtrack(array $subcomponents=[]) {
         $line = trim($this->reader->read());
-        if(strtoupper($line) == 'END:'.strtoupper(reset($this->stack)->name)) {
+        if(strtoupper($line) == 'END:'.strtoupper(reset($this->stack)->type)) {
             $component = array_shift($this->stack);
             $component->subcomponents = $subcomponents;
             return $component;
