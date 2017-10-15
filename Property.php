@@ -44,6 +44,7 @@ class Property {
                 return $parameter;
             }
         }
+        return null;
     }
 
     function __toString() {
