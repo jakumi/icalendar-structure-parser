@@ -16,4 +16,8 @@ class Parameter {
         $this->name = $name;
         $this->values = $values;
     }
+
+    function __toString() {
+        return $name.'="'.implode('","', $this->values).'"';
+    }
 }

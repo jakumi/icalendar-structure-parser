@@ -38,11 +38,19 @@ class Property {
     /**
      *  @return Parameter|null
      */
-    function getOne(string $parameterName) :Parameter {
+    function getOne(string $parameterName) :?Parameter {
         foreach($this->parameters as $parameter) {
             if($parameter->name == $parameterName) {
                 return $parameter;
             }
         }
+    }
+
+    function __toString() {
+        $keypart = [$this->name];
+        foreach($this->parameters as $parameter) {
+            $keypart[] = (string)$parameter;
+        }
+        return implode(';', $keypart).':"'.$this->value.'"';
     }
 }
