@@ -18,6 +18,6 @@ class Parameter {
     }
 
     function __toString() {
-        return $name.'="'.implode('","', $this->values).'"';
+        return $this->name.'="'.implode('","', $this->values).'"';
     }
 }
