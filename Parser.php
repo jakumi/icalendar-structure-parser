@@ -12,7 +12,7 @@ namespace jakumi\Parser\iCalendarStructure;
  */
 class Parser {
     protected $handle = null;
-    
+
     static $classMap = [
         'VCALENDAR' => Calendar::class,
         'VEVENT' => Event::class,
@@ -27,7 +27,7 @@ class Parser {
      *  @var []Component
      */
     protected $stack = [];
-    
+
     function __construct(string $filename) {
         $this->reader = new UnfoldingReader($filename);
     }
@@ -35,7 +35,7 @@ class Parser {
     function parse() {
         return $this->parseComponent();
     }
-    
+
     /**
      *  @return Event|ToDo|Journal|FreeBusy|TimeZone|Alarm|null
      */
@@ -126,14 +126,20 @@ class Parser {
         list($line, $delim) = static::_fetch_char($line);
         $parameters = [];
         while(true) {
-            if($delim == ':') break;
+            if($delim == ':') {
+                break;
+            }
 
-            if($delim != ';') trigger_error('unexpected char: '.$delim, E_USER_ERROR);
+            if($delim != ';') {
+                trigger_error('unexpected char: '.$delim, E_USER_ERROR);
+            }
 
             list($line, $parameter_name) = static::_fetch_name($line);
 
             list($line, $equalsign) = static::_fetch_char($line);
-            if($equalsign != '=') trigger_error('unexpected char: '.$equalsign, E_USER_ERROR);
+            if($equalsign != '=') {
+                trigger_error('unexpected char: '.$equalsign, E_USER_ERROR);
+            }
 
             $parameter_values = [];
             do {
@@ -145,7 +151,9 @@ class Parser {
         }
         // delim is ':'
         list($line, $value) = static::_fetch_value($line);
-        if($line) trigger_error('line should be finished, but found rest: '.$line, E_USER_ERROR);
+        if($line) {
+            trigger_error('line should be finished, but found rest: '.$line, E_USER_ERROR);
+        }
 
         $property = new Property($name, $value, $parameters);
         return $property;
