@@ -17,7 +17,7 @@ class Component {
     var $type;
 
     static $atmostonce = [];
-    
+
     function __construct(string $type, array $properties, array $components) {
         $this->type = $type;
         $this->properties = $properties;
@@ -31,7 +31,7 @@ class Component {
             return $this->get($key);
         }
     }
-    
+
     /**
      *  @return []Property
      */
@@ -55,5 +55,18 @@ class Component {
             }
         }
         return null;
+    }
+
+    function __toString() {
+        $ret = '';
+        $ret .= 'BEGIN:'.$this->type.PHP_EOL;
+        foreach($this->properties as $key => $property) {
+            $ret .= $property->__toString();
+        }
+        foreach($this->components as $component) {
+            $ret .= $component->__toString();
+        }
+        $ret .= 'END:'.$this->type.PHP_EOL;
+        return $ret;
     }
 }

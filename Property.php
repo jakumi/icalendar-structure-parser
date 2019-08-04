@@ -52,6 +52,6 @@ class Property {
         foreach($this->parameters as $parameter) {
             $keypart[] = (string)$parameter;
         }
-        return implode(';', $keypart).':"'.$this->value.'"';
+        return implode(';', $keypart).':"'.$this->value.'"'.PHP_EOL;
     }
 }
