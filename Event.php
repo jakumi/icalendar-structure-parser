@@ -21,6 +21,8 @@ class Event extends Component {
         'TRANSP',      // rfc 5545
         'URL',         // rfc 5545
         'RECURID',     // rfc 5545
+        'DTEND',       // rfc 5445
+        'DURATION',    // rfc 5445
 
         'COLOR',       // rfc 7986
     ];
