@@ -57,6 +57,8 @@ class Parser {
             $property = $this->parseProperty($line);
             if(strpos($property->name, 'BEGIN') === 0) {
                 $this->reader->pushback($line);
+                $property = null; // is not a property!
+
                 if($returnOnSubComponent) {
                     $component = new $class($component, $properties, $subcomponents);
                     array_unshift($this->stack, $component);
